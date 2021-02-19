@@ -68,11 +68,41 @@ const playerSchema = new Schema({
     type: Array,
     default: [],
   },
+  avatar: {
+    url: {
+      type: String
+    },
+    originalFilename: {
+      type: String
+    }
+  },
   //data to save from desktop client
   clientConfig: {
-    networkId: {
-      type: String,
-      default: null
+    network: {
+      tailscaleId: {
+        type: String,
+        default: null
+      },
+      zerotierId: {
+        type: String,
+        default: null
+      },
+      zerotierIp: {
+        type: String,
+        default: null
+      },
+      tailscaleIp: {
+        type: String,
+        default: null
+      },
+      clientZerotierIp: {
+        type: String,
+        default: null
+      },
+      clientTailscaleIp: {
+        type: String,
+        default: null
+      }
     },
     xboxId: {
       type: String,
@@ -82,15 +112,7 @@ const playerSchema = new Schema({
       type: String,
       default: null
     },
-    raspberryZerotierIp: {
-      type: String,
-      default: null
-    },
     raspberryLocalIp: {
-      type: String,
-      default: null
-    },
-    zerotierIp: {
       type: String,
       default: null
     },

@@ -8,16 +8,14 @@ const refreshTokenLife = process.env.REFRESH_TOKEN_LIFE;
 const refreshTokenSecret = process.env.REFRESH_TOKEN_SECRET;
 
 module.exports = async (req, res, next) => {
-    
     try {
-        const {nickname, password} = req.body
-        const {ip} = req.ip
-
-        const player = await Player.findByNickname(nickname, 'firstname lastname email nickname networkId xboxId xboxIp password clientConfig')
-
+        const { nickname, password } = req.body
+        const { ip } = req.ip
+        const player = await Player.findByNickname(nickname, 'firstname lastname email nickname networkId xboxId xboxIp password clientConfig avatar')
+        
         if (!player) {
             return res.status(401).json({
-                message:{
+                message: {
                     status: 401,
                     msg: 'Authorization error!'
                 },
@@ -41,7 +39,7 @@ module.exports = async (req, res, next) => {
             // }
 
             return res.status(401).json({
-                message:{
+                message: {
                     status: 401,
                     msg: 'Authorization error!'
                 },
@@ -66,16 +64,16 @@ module.exports = async (req, res, next) => {
             algorithm: 'HS256'
         })
 
-        
+
         res.json({
-            message:{
+            message: {
                 status: 200,
                 msg: 'Login success!'
             },
             token,
             refreshToken,
             expiresIn: Date.now() + parseInt(tokenLife),
-            user: {...player._doc, password: undefined}
+            user: { ...player._doc, password: undefined, avatar: player.avatar.url }
         })
 
         player.refreshToken = refreshToken

@@ -3,8 +3,8 @@ const router = new Router();
 const validationErrors = require("../middleware/validation.middleware");
 const auth = require("../middleware/auth.middleware");
 const { body } = require("express-validator");
-
 const passRegex = /^(?=.*\d)(?=.*[a-z])(?=.*[A-Z])[0-9a-zA-Z]{6,}$/;
+const uploadMiddleware = require('../middleware/files-upload.middleware')
 
 //XBOX
 router.get("/console/:id", [auth], require("./Console/getConsole"));
@@ -60,6 +60,7 @@ router.get("/user/:id", [], require("./User/getUser"));
 router.delete("/user/:id", [auth], require("./User/deleteUser"));
 router.put("/user/zerotier", [auth], require("./User/changeZerotierId"));
 router.put("/user/playtime", [auth], require("./User/setPlaytime"));
+router.put('/user', [auth, uploadMiddleware.single('avatar')], require('./User/updateUserData'))
 
 //WORKER
 router.post("/worker/register", [], require("./Worker/register"));
@@ -105,5 +106,6 @@ router.use("/log", require("./Logs/log"));
 
 //play
 // router.post('/play', [auth], require('./Play/play'))
+router.get('/avatar/:file', require('./FilesServing/avatar'))
 
 module.exports = router;

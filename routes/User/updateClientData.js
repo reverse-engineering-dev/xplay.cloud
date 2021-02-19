@@ -3,33 +3,21 @@ const logger = require("../../winston/logger");
 module.exports = async (req, res, next) => {
   try {
     let user = req.user;
-
-    const {
-      networkId,
-      xboxId,
-      xboxIp,
-      raspberryZerotierIp,
-      raspberryLocalIp,
-      zerotierIp,
-    } = req.body;
+    const { body } = req
 
     user.updateClientData({
-      networkId,
-      xboxId,
-      xboxIp,
-      raspberryZerotierIp,
-      raspberryLocalIp,
-      zerotierIp,
+      xboxId: body.xboxId,
+      xboxIp: body.xboxIp,
+      raspberryLocalIp: body.raspberryLocalIp,
+      network: body.network
     });
 
     const data = {
       clientConfig: {
-        networkId: user.clientConfig.networkId,
+        network: user.clientConfig.network,
         xboxId: user.clientConfig.xboxId,
         xboxIp: user.clientConfig.xboxIp,
-        raspberryZerotierIp: user.clientConfig.raspberryZerotierIp,
         raspberryLocalIp: user.clientConfig.raspberryLocalIp,
-        zerotierIp: user.clientConfig.zerotierIp,
       },
       _id: user._id,
       firstname: user.firstname,
@@ -49,7 +37,6 @@ module.exports = async (req, res, next) => {
 
   } catch (err) {
     console.log('err', err)
-    console.error(err);
     logger.error(err);
     next(err);
   }

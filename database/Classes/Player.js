@@ -3,7 +3,7 @@ const secret = process.env.SECRET_KEY
 
 module.exports = class Player {
     static findUserByID(id) {
-		return this.findById(id)
+        return this.findById(id)
     }
 
     static hashPassword(pass) {
@@ -11,11 +11,11 @@ module.exports = class Player {
     }
 
     static findByEmail(email) {
-        return this.findOne({email})
+        return this.findOne({ email })
     }
 
     static findByNickname(nickname, fields) {
-        return this.findOne({nickname}).select(fields)
+        return this.findOne({ nickname }).select(fields)
     }
 
     comparePasswords(pass) {
@@ -36,16 +36,29 @@ module.exports = class Player {
         this.nextAttempt = new Date(date.getTime() + 60 * 60000);
     }
 
-    updateZerotierId(id){
+    updateZerotierId(id) {
         this.zerotierId = id
     }
 
-    deleteUser(){
+    deleteUser() {
         return this.remove()
     }
 
-    updateClientData(data){
-        this.clientConfig = data
+    updateClientData(data) {
+        this.clientConfig = { ...this.clientConfig, ...data }
+        this.save()
+    }
+
+    updateUserData(data) {
+        Object.keys(data).map(key => {
+            this[key] = data[key]
+        })
+
+        this.save()
+    }
+
+    updateAvatar(path) {
+        this.avatar.url = path
         this.save()
     }
 }

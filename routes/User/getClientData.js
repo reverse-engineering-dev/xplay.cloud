@@ -1,27 +1,28 @@
 
 module.exports = async (req, res, next) => {
   try {
-    let user = req.user;
+    console.log('req.user', req.user)
+    let { clientConfig, _id, firstname, lastname, email, nickname, avatar } = req.user
+    const { xboxId, xboxIp, raspberryLocalIp, network } = clientConfig
 
-    const data = {
+    const userData = {
       clientConfig: {
-        networkId: user.clientConfig.networkId,
-        xboxId: user.clientConfig.xboxId,
-        xboxIp: user.clientConfig.xboxIp,
-        raspberryZerotierIp: user.clientConfig.raspberryZerotierIp,
-        raspberryLocalIp: user.clientConfig.raspberryLocalIp,
-        zerotierIp: user.clientConfig.zerotierIp,
+        network,
+        xboxId,
+        xboxIp,
+        raspberryLocalIp,
       },
-      _id: user._id,
-      firstname: user.firstname,
-      lastname: user.lastname,
-      nickname: user.nickname,
-      email: user.email,
+      _id,
+      firstname,
+      lastname,
+      nickname,
+      email,
+      avatar: avatar.url
     };
 
     res.json({
       status: "Success!",
-      user: data,
+      user: userData,
       message: {
         status: 200,
         messageText: "Success, user client data updated!",

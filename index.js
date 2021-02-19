@@ -15,11 +15,11 @@ if (process.env.NODE_ENV === "production") {
 app.use(logger("dev"));
 
 const PORT = process.env.PORT || 8000;
+
 //middlewares
-app.use(express.urlencoded({ extended: true }));
-app.use(express.json());
 app.use(require("helmet")());
 app.use(require("cors")());
+app.use(express.json());
 
 //routes
 app.use("/api", require("./routes/routes"));
@@ -30,12 +30,12 @@ app.use("/api", require("./routes/routes"));
 const start = async () => {
   await mongoose.connect(process.env.CONNECT_STRING);
 
-  // const db = mongoose.connection;
+  const db = mongoose.connection;
 
-  // db.on("error", console.error.bind(console, "DB connection error:"));
-  // db.once("open", () => {
-  //   console.log("DB started");
-  // });
+  db.on("error", console.error.bind(console, "DB connection error:"));
+  db.once("open", () => {
+    console.log("DB started");
+  });
 
   app.listen(PORT, () => {
     console.log(`server listen on ${PORT}`);

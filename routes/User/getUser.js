@@ -3,10 +3,11 @@ const User = require('^/database/models/Player')
 
 module.exports = async (req, res, next) => {
     try {
-        const {id} = req.params
+        const { id } = req.params
         const user = await User.findUserByID(id)
+        console.log('user', user)
 
-        if(!user){
+        if (!user) {
             return res.status(400).json({
                 msg: 'Invalid user id!'
             })
