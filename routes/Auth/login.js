@@ -12,7 +12,7 @@ module.exports = async (req, res, next) => {
         const { nickname, password } = req.body
         const { ip } = req.ip
         const player = await Player.findByNickname(nickname, 'firstname lastname email nickname networkId xboxId xboxIp password clientConfig avatar')
-        
+
         if (!player) {
             return res.status(401).json({
                 message: {
@@ -78,7 +78,8 @@ module.exports = async (req, res, next) => {
 
         player.refreshToken = refreshToken
         await player.save()
-    } catch (e) {
-        next(e)
+    } catch (err) {
+        console.log('err', err)
+        next(err)
     }
 }

@@ -10,6 +10,14 @@ const playerSchema = new Schema({
     type: String,
     required: true,
   },
+  raspSocketId: {
+    type: String,
+    default: null,
+  },
+  isClientConfigured: {
+    type: Boolean,
+    default: false
+  },
   nickname: {
     type: String,
     required: true,

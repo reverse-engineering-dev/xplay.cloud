@@ -1,4 +1,4 @@
-const sha512 = require('crypto-js/hmac-sha512')
+const { SHA512 } = require('crypto-js')
 const secret = process.env.SECRET_KEY
 
 module.exports = class Player {
@@ -7,7 +7,7 @@ module.exports = class Player {
     }
 
     static hashPassword(pass) {
-        return sha512(pass, secret)
+        return SHA512(pass, secret)
     }
 
     static findByEmail(email) {
@@ -19,11 +19,11 @@ module.exports = class Player {
     }
 
     comparePasswords(pass) {
-        return this.password === sha512(pass, secret).toString()
+        return this.password === SHA512(pass, { secret }).toString()
     }
 
     changePassword(newPass) {
-        this.password = sha512(newPass, secret)
+        this.password = SHA512(newPass, secret)
     }
 
     increaseAttempts() {
@@ -59,6 +59,11 @@ module.exports = class Player {
 
     updateAvatar(path) {
         this.avatar.url = path
+        this.save()
+    }
+
+    configureClient() {
+        this.isClientConfigured = true
         this.save()
     }
 }

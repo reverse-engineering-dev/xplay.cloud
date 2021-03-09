@@ -1,8 +1,7 @@
 
 module.exports = async (req, res, next) => {
   try {
-    console.log('req.user', req.user)
-    let { clientConfig, _id, firstname, lastname, email, nickname, avatar } = req.user
+    const { clientConfig, _id, firstname, lastname, email, nickname, avatar, isClientConfigured } = req.user
     const { xboxId, xboxIp, raspberryLocalIp, network } = clientConfig
 
     const userData = {
@@ -13,6 +12,7 @@ module.exports = async (req, res, next) => {
         raspberryLocalIp,
       },
       _id,
+      isClientConfigured,
       firstname,
       lastname,
       nickname,
