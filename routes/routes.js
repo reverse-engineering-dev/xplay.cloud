@@ -19,7 +19,8 @@ const withSockets = (io) => {
   })
 
   //XBOX
-  router.get("/console/ip", [auth], require("./Console/getXboxIp")(io));
+  router.post('/console/power-on', [auth], require('./Console/tryPowerOn')(io))
+  router.get("/console/data", [auth], require("./Console/getXboxData")(io));
   router.get("/console/:id", [auth], require("./Console/getConsole"));
   router.post("/raspberry", [auth], require("./Raspberry/addRaspberry"));
   router.post("/console", [auth], require("./Console/addConsole"));
@@ -27,7 +28,9 @@ const withSockets = (io) => {
   router.delete("/console/:id", [auth], require("./Console/deleteConsole"));
 
   //RASPBERRY
+  router.get('/raspberry/xbox-id', [auth], require('./Raspberry/getXboxId')(io))
   router.post('/raspberry/join/:network', [auth], require('./Raspberry/joinNetwork')(io))
+  router.post('/raspberry/reboot', [auth], require('./Raspberry/reboot')(io))
   router.get('/raspberry/local-ip', [auth], require('./Raspberry/getRaspberryLocalIp')(io))
   router.get("/raspberry/:id", [auth], require("./Raspberry/getRaspberry"));
   router.get("/raspberry/zerotier/:id", [auth], require("./Raspberry/getZerotierId"));

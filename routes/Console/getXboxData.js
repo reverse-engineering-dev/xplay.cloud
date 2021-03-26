@@ -1,4 +1,3 @@
-
 module.exports = (io) => {
     return async (req, res, next) => {
         const user = req.user
@@ -7,8 +6,8 @@ module.exports = (io) => {
             io.sockets.sockets
                 .get(user.raspSocketId)
                 .emit(
-                    `get raspberry local ip`,
-                    { userId: user._id },
+                    `get xbox data`,
+                    { xboxIp: user.clientConfig.xboxIp },
                     (data) => {
                         res.json({ ...data })
                     }

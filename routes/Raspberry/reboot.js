@@ -5,13 +5,12 @@ module.exports = (io) => {
         try {
             io.sockets.sockets
                 .get(user.raspSocketId)
-                .emit(
-                    `get xbox ip`,
-                    { empty: true },
+                .emit(`raspberry reboot`, { reboot: true },
                     (data) => {
-                        res.json({ ...data })
-                    }
-                )
+                        res.json({
+                            ...data
+                        })
+                    })
         } catch (err) {
             console.log('error', err)
             next(err)
