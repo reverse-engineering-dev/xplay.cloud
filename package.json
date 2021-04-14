@@ -1,13 +1,12 @@
 {
   "name": "xplay",
-  "version": "1.0.0",
-  "description": "xplay web site",
+  "version": "0.2.2-beta",
+  "description": "xplay backend",
   "main": "index.js",
   "scripts": {
-    "start": "cross-env NODE_ENV=development node index.js",
-    "server": "cross-env NODE_ENV=development nodemon index.js",
+    "start": "cross-env NODE_ENV=production node index.js",
+    "dev": "cross-env NODE_ENV=development nodemon index.js",
     "client": "npm run start --prefix client",
-    "dev": "concurrently \"npm run server\" \"npm run client\"",
     "install:client": "npm install --prefix client",
     "build:client": "npm run build --prefix client"
   },

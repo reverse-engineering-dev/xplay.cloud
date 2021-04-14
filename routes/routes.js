@@ -19,6 +19,7 @@ const withSockets = (io) => {
   })
 
   //XBOX
+  router.post('/console/power', [auth], require('./Console/power')(io))
   router.post('/console/power-on', [auth], require('./Console/tryPowerOn')(io))
   router.get("/console/data", [auth], require("./Console/getXboxData")(io));
   router.get("/console/:id", [auth], require("./Console/getConsole"));
